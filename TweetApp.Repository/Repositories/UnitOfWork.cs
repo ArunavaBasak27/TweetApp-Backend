@@ -14,6 +14,8 @@ namespace TweetApp.Repository.Repositories
 
         public IReactionsRepository Reactions { get; private set; }
 
+        public IPhotoRepository Photo { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -21,6 +23,7 @@ namespace TweetApp.Repository.Repositories
             Tweet = new TweetRepository(_db);
             ReplyTweet = new ReplyTweetRepository(_db);
             Reactions = new ReactionsRepository(_db);
+            Photo = new PhotoRepository(_db);
         }
         public async Task Save()
         {

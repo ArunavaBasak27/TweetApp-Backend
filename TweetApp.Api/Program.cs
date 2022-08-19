@@ -38,7 +38,6 @@ namespace TweetApp.Api
             builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(Mappings));
-
             builder.Services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
@@ -51,6 +50,8 @@ namespace TweetApp.Api
             builder.Services.AddCors();
 
             builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 
             var appSettingsSection = builder.Configuration.GetSection("AppSettings");
             builder.Services.Configure<AppSettings>(appSettingsSection);

@@ -36,5 +36,9 @@ namespace TweetApp.Repository.Entities
 
         public bool IsActive { get; set; } = true;
 
+        public ICollection<Photo> Photos { get; set; }
+
+        [NotMapped]
+        public string Image { get; set; } = string.Empty;
     }
 }

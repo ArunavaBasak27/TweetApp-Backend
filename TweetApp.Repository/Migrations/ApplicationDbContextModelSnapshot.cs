@@ -22,6 +22,33 @@ namespace TweetApp.Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("TweetApp.Repository.Entities.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserLoginId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserLoginId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("TweetApp.Repository.Entities.Reaction", b =>
                 {
                     b.Property<int>("Id")
@@ -143,6 +170,13 @@ namespace TweetApp.Repository.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("TweetApp.Repository.Entities.Photo", b =>
+                {
+                    b.HasOne("TweetApp.Repository.Entities.User", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("UserLoginId");
+                });
+
             modelBuilder.Entity("TweetApp.Repository.Entities.Reaction", b =>
                 {
                     b.HasOne("TweetApp.Repository.Entities.Tweet", "Tweet")
@@ -190,6 +224,11 @@ namespace TweetApp.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TweetApp.Repository.Entities.User", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

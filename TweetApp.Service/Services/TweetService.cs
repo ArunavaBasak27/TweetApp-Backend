@@ -41,6 +41,18 @@ namespace TweetApp.Service.Services
         public async Task<IEnumerable<TweetDetailsDto>> GetAllTweets()
         {
             var tweetList = await _unitOfWork.Tweet.GetAllAsync(includeProperties: "User");
+            var userList = await _unitOfWork.User.GetAllAsync(includeProperties: "Photos");
+
+            foreach (var tweet in tweetList)
+            {
+                foreach (var user in userList)
+                {
+                    if (tweet.UserId == user.LoginId)
+                    {
+                        tweet.User=user;
+                    }
+                }
+            }
 
             var tweets = new List<TweetDetailsDto>();
 
@@ -55,14 +67,26 @@ namespace TweetApp.Service.Services
         public async Task<TweetDetailsDto> GetATweet(int id)
         {
             var tweet = await _unitOfWork.Tweet.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "User");
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.LoginId == tweet.UserId);
+
+            tweet.User = user;
+
             return _mapper.Map<TweetDetailsDto>(tweet);
         }
 
         public async Task<IEnumerable<TweetDetailsDto>> GetTweetsByUsername(string username)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username);
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username,includeProperties:"Photos");
 
             var tweetList = await _unitOfWork.Tweet.GetAllAsync(x => x.UserId == user.LoginId, includeProperties: "User");
+
+            foreach (var tweet in tweetList)
+            {
+                if(tweet.UserId==user.LoginId)
+                {
+                    tweet.User = user;
+                }
+            }
 
             var tweets = new List<TweetDetailsDto>();
 
@@ -147,7 +171,19 @@ namespace TweetApp.Service.Services
         public async Task<IEnumerable<ReactionResponse>> GetReactionsList()
         {
             var reaction = await _unitOfWork.Reactions.GetAllAsync( includeProperties: "User");
-            
+            var userList = await _unitOfWork.User.GetAllAsync(includeProperties: "Photos");
+
+            foreach (var reac in reaction)
+            {
+                foreach (var user in userList)
+                {
+                    if (reac.UserId == user.LoginId)
+                    {
+                        reac.User = user;
+                    }
+                }
+            }
+
             List<ReactionResponse> responses = new();
             
             foreach (var item in reaction)
@@ -162,6 +198,19 @@ namespace TweetApp.Service.Services
         {
             var replies = await _unitOfWork.ReplyTweet.GetAllAsync(includeProperties: "User");
             replies = replies.OrderByDescending(x => x.DatePosted);
+
+            var userList = await _unitOfWork.User.GetAllAsync(includeProperties: "Photos");
+            
+            foreach (var reply in replies)
+            {
+                foreach (var user in userList)
+                {
+                    if (reply.UserId == user.LoginId)
+                    {
+                        reply.User = user;
+                    }
+                }
+            }
 
             var responseReply=new List<ReplyResponse>();
 

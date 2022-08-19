@@ -6,6 +6,7 @@
         ITweetRepository Tweet { get; }
         IReplyTweetRepository ReplyTweet { get; }
         IReactionsRepository Reactions { get; }
+        IPhotoRepository Photo { get; }
         Task Save();
     }
 }

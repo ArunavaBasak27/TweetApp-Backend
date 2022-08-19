@@ -15,13 +15,20 @@ namespace TweetApp.Service.Services
 
         public ITweetService TweetService { get; private set; }
 
-        public Services(IUnitOfWork unitOfWork, IMapper mapper, IOptions<AppSettings> appSettings)
+        public IPhotoAccessor PhotoAccessor { get; private set; }
+
+        public IPhotoService PhotoService { get; private set; }
+
+        public Services(IUnitOfWork unitOfWork, IMapper mapper,
+            IOptions<AppSettings> appSettings, IOptions<CloudinarySettings> cloudinary)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             UserService = new UserService(_unitOfWork, _mapper);
             JwtService = new JwtService(appSettings);
             TweetService = new TweetService(_unitOfWork, _mapper);
+            PhotoAccessor = new PhotoAccessor(cloudinary);
+            PhotoService = new PhotoService(_unitOfWork,PhotoAccessor,_mapper);
         }
     }
 }

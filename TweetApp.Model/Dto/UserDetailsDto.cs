@@ -1,5 +1,7 @@
 ﻿#nullable disable
 
+using TweetApp.Repository.Entities;
+
 namespace TweetApp.Model.Dto
 {
     public class UserDetailsDto
@@ -12,5 +14,8 @@ namespace TweetApp.Model.Dto
         public string Email { get; set; }
 
         public string ContactNumber { get; set; }
+        public ICollection<Photo> Photos { get; set; }
+        public string Image { get; set; } = string.Empty;
+
     }
 }

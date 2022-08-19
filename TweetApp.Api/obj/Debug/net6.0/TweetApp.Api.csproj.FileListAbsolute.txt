@@ -205,3 +205,4 @@ C:\PracticeJobs\UseCases\UseCase-2\TweetApp\Backend\TweetApp.Api\bin\Debug\net6.
 C:\PracticeJobs\UseCases\UseCase-2\TweetApp\Backend\TweetApp.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll
 C:\PracticeJobs\UseCases\UseCase-2\TweetApp\Backend\TweetApp.Api\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\PracticeJobs\UseCases\UseCase-2\TweetApp\Backend\TweetApp.Api\bin\Debug\net6.0\RabbitMQ.Client.dll
+C:\PracticeJobs\UseCases\UseCase-2\TweetApp\Backend\TweetApp.Api\bin\Debug\net6.0\CloudinaryDotNet.dll

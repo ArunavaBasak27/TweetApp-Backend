@@ -13,5 +13,6 @@ namespace TweetApp.Repository.Contexts
         public DbSet<Tweet> Tweets { get; set; }
         public DbSet<ReplyTweet> ReplyTweets { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

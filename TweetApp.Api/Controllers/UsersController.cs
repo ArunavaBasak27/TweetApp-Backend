@@ -5,6 +5,7 @@ using TweetApp.Api.RabbitMQSender;
 using TweetApp.Model.Api;
 using TweetApp.Model.Dto;
 using TweetApp.Model.Input;
+using TweetApp.Repository.Entities;
 using TweetApp.Service.Services.Interfaces;
 
 namespace TweetApp.Api.Controllers
@@ -18,7 +19,7 @@ namespace TweetApp.Api.Controllers
         private readonly IServices _services;
         protected ResponseDto _response;
         private readonly IRabbitMQMessageSender _messageSender;
-        public UsersController(IServices services,IRabbitMQMessageSender messageSender)
+        public UsersController(IServices services, IRabbitMQMessageSender messageSender)
         {
             _services = services;
             _response = new ResponseDto();
@@ -84,7 +85,7 @@ namespace TweetApp.Api.Controllers
                 var token = _services.JwtService.GenerateToken(model);
                 _response.Result = user;
                 _response.DisplayMessage = "Login successful for " + model.Username;
-                _response.Token=token;
+                _response.Token = token;
             }
             catch (Exception ex)
             {
@@ -125,10 +126,10 @@ namespace TweetApp.Api.Controllers
         {
             try
             {
-                var users=await _services.UserService.FindUsersByUsername(username);
+                var users = await _services.UserService.FindUsersByUsername(username);
                 _response.Result = users;
-                
-                if(users==null)
+
+                if (users == null)
                 {
                     _response.DisplayMessage = "No users found";
                 }
@@ -160,7 +161,25 @@ namespace TweetApp.Api.Controllers
             {
                 _response.IsSuccess = false;
                 _response.DisplayMessage = "You are not logged in. Please log in again";
-                _response.ErrorMessages=new List<string> { ex.Message};
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return _response;
+        }
+
+        [HttpPost("user/{username}/photos")]
+        public async Task<object> AddPhoto(string username, [FromForm] IFormFile file)
+        {
+            try
+            {
+                var result = await _services.PhotoService.AddPhoto(username, file);
+                _response.Result = result;
+                _response.DisplayMessage = "Photo added successfully!";
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "You are not logged in. Please log in again";
+                _response.ErrorMessages = new List<string> { ex.Message };
             }
             return _response;
         }

@@ -1,4 +1,5 @@
-﻿using TweetApp.Model.Dto;
+﻿using Microsoft.AspNetCore.Http;
+using TweetApp.Model.Dto;
 using TweetApp.Repository.Entities;
 
 namespace TweetApp.Service.Services.Interfaces
@@ -12,6 +13,5 @@ namespace TweetApp.Service.Services.Interfaces
         Task<UserDetailsDto> FindByUsername(string username);
         Task<IEnumerable<UserDetailsDto>> FindUsersByUsername(string username); 
         Task<bool> ResetPassword(string username, string password);
-
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using TweetApp.Model.Dto;
 using TweetApp.Repository.Entities;
 using TweetApp.Repository.Interfaces;
 using TweetApp.Service.Services.Interfaces;
+#nullable disable
 
 namespace TweetApp.Service.Services
 {
@@ -18,7 +20,7 @@ namespace TweetApp.Service.Services
 
         public async Task<IEnumerable<UserDetailsDto>> GetAllUsers()
         {
-            var userList = await _unitOfWork.User.GetAllAsync();
+            var userList = await _unitOfWork.User.GetAllAsync(includeProperties: "Photos");
             List<UserDetailsDto> users = new List<UserDetailsDto>();
 
             foreach (var user in userList)
@@ -46,14 +48,14 @@ namespace TweetApp.Service.Services
 
         public async Task<UserDetailsDto> Authenticate(string username, string password)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username && x.Password == password);
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username && x.Password == password,includeProperties:"Photos");
 
             return _mapper.Map<UserDetailsDto>(user);
         }
 
         public async Task<UserDetailsDto> FindByUsername(string username)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username);
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username,includeProperties:"Photos");
             return _mapper.Map<UserDetailsDto>(user);
         }
 
@@ -74,7 +76,7 @@ namespace TweetApp.Service.Services
 
         public async Task<IEnumerable<UserDetailsDto>> FindUsersByUsername(string username)
         {
-            var users = await _unitOfWork.User.GetAllAsync(x=>x.Email.ToLower().StartsWith(username.ToLower()));
+            var users = await _unitOfWork.User.GetAllAsync(x=>x.Email.ToLower().StartsWith(username.ToLower()), includeProperties: "Photos");
 
             var usersList = new List<UserDetailsDto>();
 
@@ -85,5 +87,6 @@ namespace TweetApp.Service.Services
 
             return usersList;
         }
+
     }
 }

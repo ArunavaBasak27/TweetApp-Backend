@@ -128,8 +128,7 @@ namespace TweetApp.Api.Controllers
         }
 
         [HttpPost("{username}/reply/{id}")]
-        public async Task<object> ReplyTweet([FromRoute] string username, [FromRoute] int id
-            , [FromBody] Body body)
+        public async Task<object> ReplyTweet([FromRoute] string username, [FromRoute] int id, [FromBody] Body body)
         {
             try
             {
