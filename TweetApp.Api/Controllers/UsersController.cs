@@ -178,7 +178,45 @@ namespace TweetApp.Api.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.DisplayMessage = "You are not logged in. Please log in again";
+                _response.DisplayMessage = "Something went wrong while adding photo. Please try again";
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return _response;
+        }
+        [HttpDelete("user/{username}/photo/{id}/delete")]
+        public async Task<object> DeletePhoto([FromRoute] string username, [FromRoute] int id)
+        {
+            try
+            {
+                var result = await _services.PhotoService.DeletePhoto(username, id);
+                if (result == true)
+                    _response.DisplayMessage = "Deletion successful";
+                else throw new Exception("Deletion failed");
+                _response.Result = result;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Something went wrong while deleting photo. Please try again";
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return _response;
+        }
+        [HttpPost("user/{username}/photo/{id}/set-main")]
+        public async Task<object> SetMainPhoto([FromRoute] string username, [FromRoute] int id)
+        {
+            try
+            {
+                var result=await _services.PhotoService.SetMainPhoto(username, id);
+                if (result)
+                    _response.DisplayMessage = "Main photo changed";
+                else throw new Exception("Something went wrong!!!");
+                _response.Result= result;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Something went wrong while setting main photo. Please try again";
                 _response.ErrorMessages = new List<string> { ex.Message };
             }
             return _response;

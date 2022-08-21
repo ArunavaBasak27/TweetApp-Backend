@@ -25,6 +25,7 @@ namespace TweetApp.Service.Services
 
             foreach (var user in userList)
             {
+                user.Image = user == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
                 users.Add(_mapper.Map<UserDetailsDto>(user));
             }
 
@@ -36,6 +37,7 @@ namespace TweetApp.Service.Services
             var user = _mapper.Map<User>(userDto);
             await _unitOfWork.User.AddAsync(user);
             await _unitOfWork.Save();
+            user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             return _mapper.Map<UserDetailsDto>(user);
         }
 
@@ -48,14 +50,17 @@ namespace TweetApp.Service.Services
 
         public async Task<UserDetailsDto> Authenticate(string username, string password)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username && x.Password == password,includeProperties:"Photos");
-
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username && x.Password == password, includeProperties: "Photos");
+            if (user != null)
+                user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             return _mapper.Map<UserDetailsDto>(user);
         }
 
         public async Task<UserDetailsDto> FindByUsername(string username)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username,includeProperties:"Photos");
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username, includeProperties: "Photos");
+            if (user != null)
+                user.Image = user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             return _mapper.Map<UserDetailsDto>(user);
         }
 
@@ -65,7 +70,7 @@ namespace TweetApp.Service.Services
 
             if (user == null)
                 return false;
-            var userObj= _mapper.Map<User>(user);
+            var userObj = _mapper.Map<User>(user);
             userObj.Password = password;
 
             _unitOfWork.User.Update(userObj);
@@ -76,12 +81,14 @@ namespace TweetApp.Service.Services
 
         public async Task<IEnumerable<UserDetailsDto>> FindUsersByUsername(string username)
         {
-            var users = await _unitOfWork.User.GetAllAsync(x=>x.Email.ToLower().StartsWith(username.ToLower()), includeProperties: "Photos");
+            var users = await _unitOfWork.User.GetAllAsync(x => x.Email.ToLower().StartsWith(username.ToLower()), includeProperties: "Photos");
 
             var usersList = new List<UserDetailsDto>();
 
             foreach (var user in users)
             {
+                if (user != null)
+                    user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
                 usersList.Add(_mapper.Map<UserDetailsDto>(user));
             }
 

@@ -47,6 +47,7 @@ namespace TweetApp.Service.Services
             {
                 foreach (var user in userList)
                 {
+                    user.Image = user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
                     if (tweet.UserId == user.LoginId)
                     {
                         tweet.User=user;
@@ -68,7 +69,7 @@ namespace TweetApp.Service.Services
         {
             var tweet = await _unitOfWork.Tweet.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "User");
             var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.LoginId == tweet.UserId);
-
+            user.Image = user.Photos==null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             tweet.User = user;
 
             return _mapper.Map<TweetDetailsDto>(tweet);
@@ -77,7 +78,7 @@ namespace TweetApp.Service.Services
         public async Task<IEnumerable<TweetDetailsDto>> GetTweetsByUsername(string username)
         {
             var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username,includeProperties:"Photos");
-
+            user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             var tweetList = await _unitOfWork.Tweet.GetAllAsync(x => x.UserId == user.LoginId, includeProperties: "User");
 
             foreach (var tweet in tweetList)
@@ -140,7 +141,7 @@ namespace TweetApp.Service.Services
         public async Task<ReplyResponse> ReplyTweet(string username, int id, string message)
         {
             var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username);
-
+            user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             ReplyTweetDto replyDto = new()
             {
                 UserId = user.LoginId,
@@ -177,6 +178,7 @@ namespace TweetApp.Service.Services
             {
                 foreach (var user in userList)
                 {
+                    user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
                     if (reac.UserId == user.LoginId)
                     {
                         reac.User = user;
@@ -205,6 +207,7 @@ namespace TweetApp.Service.Services
             {
                 foreach (var user in userList)
                 {
+                    user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
                     if (reply.UserId == user.LoginId)
                     {
                         reply.User = user;

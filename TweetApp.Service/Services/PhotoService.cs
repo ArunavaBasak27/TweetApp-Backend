@@ -52,5 +52,48 @@ namespace TweetApp.Service.Services
 
             return response;
         }
+
+        public async Task<bool> DeletePhoto(string username, int id)
+        {
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username, includeProperties: "Photos");
+
+            if (user == null)
+                return false;
+            
+            var photo=user.Photos.FirstOrDefault(x=>x.Id == id);
+
+            if(photo == null||photo.IsMain)  return false;
+
+            var result = await _photoAccessor.DeletePhoto(photo.PublicId);
+
+            if (result == null) return false;
+
+            user.Photos.Remove(photo);
+            _unitOfWork.Photo.Remove(photo);
+
+            await _unitOfWork.Save();
+
+            return true;
+        }
+
+        public async Task<bool> SetMainPhoto(string username, int id)
+        {
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username, includeProperties: "Photos");
+
+            if (user == null) return false;
+
+            var photo=user.Photos.FirstOrDefault(x=>x.Id==id);
+
+            if (photo == null||photo.IsMain) return false;
+            
+            var currentMain=user.Photos.FirstOrDefault(x=>x.IsMain);
+
+            if (currentMain != null) currentMain.IsMain = false;
+
+            photo.IsMain = true;
+
+            await _unitOfWork.Save();
+            return true;
+        }
     }
 }
