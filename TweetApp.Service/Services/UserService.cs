@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using TweetApp.Model.Dto;
 using TweetApp.Repository.Entities;
 using TweetApp.Repository.Interfaces;
