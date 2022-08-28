@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9L+bf5lCPrQdsi5n5aHiWndSWF5cVsC0enSMSeqUvQdsrDtQkhzVDL/TgberqPjjj+7MyflQuZJUTZZt5jPqZQ==",
+  "dgSpecHash": "3IGRV2zAF/ne4YJ8EgRftAYJB5z5TvFcDf+9PYacwmTM68qowh9p4P+MFg63ZZbg6RuXxpQAtzV5zTgtp9OJHw==",
   "success": true,
   "projectFilePath": "C:\\PracticeJobs\\UseCases\\UseCase-2\\TweetApp\\Backend\\RabbitMQLogger\\RabbitMQLogger.csproj",
   "expectedPackageFiles": [

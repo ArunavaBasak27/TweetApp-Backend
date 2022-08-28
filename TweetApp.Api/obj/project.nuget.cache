@@ -1,13 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "DTKOWnebVAWxvaKT0EfAvMd5xwtgf0nyhhH9wwLJPzXrEqm/DIXaf5hBaQR/Pw6zsCHKmxdeiXZZS51aXhV1Ug==",
+  "dgSpecHash": "DiFuO+rzzQCD7iFkjga3rG4SQ/bEIlWW9R7Ehs14etrPxAIHni6gUeBkC/1XqBIyK/UocI3P1KyOU/8cXxE6Wg==",
   "success": true,
   "projectFilePath": "C:\\PracticeJobs\\UseCases\\UseCase-2\\TweetApp\\Backend\\TweetApp.Api\\TweetApp.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\cloudinarydotnet\\1.19.0\\cloudinarydotnet.1.19.0.nupkg.sha512",
+    "C:\\Users\\ARUNAVA\\.nuget\\packages\\confluent.kafka\\1.9.2\\confluent.kafka.1.9.2.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\ARUNAVA\\.nuget\\packages\\librdkafka.redist\\1.9.2\\librdkafka.redist.1.9.2.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.7\\microsoft.aspnetcore.authentication.jwtbearer.6.0.7.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\ARUNAVA\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

@@ -66,14 +66,15 @@ namespace TweetApp.Service.Services
 
         public async Task<bool> ResetPassword(string username, string password)
         {
-            var user = await FindByUsername(username);
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username);
 
             if (user == null)
                 return false;
-            var userObj = _mapper.Map<User>(user);
-            userObj.Password = password;
 
-            _unitOfWork.User.Update(userObj);
+            user.Password = password;
+
+            _unitOfWork.User.Update(user);
+            
             await _unitOfWork.Save();
 
             return true;

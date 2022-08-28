@@ -140,7 +140,7 @@ namespace TweetApp.Service.Services
 
         public async Task<ReplyResponse> ReplyTweet(string username, int id, string message)
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username);
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == username,includeProperties:"Photos");
             user.Image = user.Photos == null || user.Photos.Count == 0 ? String.Empty : user.Photos.FirstOrDefault(x => x.IsMain == true).Url;
             ReplyTweetDto replyDto = new()
             {
