@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 using TweetApp.Api.KafkaProducer;
-using TweetApp.Api.RabbitMQSender;
 using TweetApp.Api.SwaggerConfigurations;
 using TweetApp.Repository.Contexts;
 using TweetApp.Repository.Interfaces;
@@ -30,7 +29,6 @@ namespace TweetApp.Api
             builder.Services.AddControllers();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServices, Services>();
-            builder.Services.AddScoped<IRabbitMQMessageSender, RabbitMQMessageSender>();    
             builder.Services.AddScoped<IKafkaSender, KafkaSender>();    
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddDbContext<ApplicationDbContext>

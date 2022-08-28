@@ -12,7 +12,6 @@ namespace TweetApp.Service.Services.Interfaces
         Task<bool> DeleteTweet(int id, string username);
         Task<ReplyResponse> ReplyTweet(string username, int id, string message);
         Task<int> LikeTweet(string username,int id);
-        Task<int> CountLikes(int id);
         Task<IEnumerable<ReactionResponse>> GetReactionsList();
         Task<IEnumerable<ReplyResponse>> GetRepliesList();
 

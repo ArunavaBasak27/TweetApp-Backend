@@ -18,11 +18,6 @@ namespace TweetApp.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<int> CountLikes(int id)
-        {
-            var list = await _unitOfWork.Reactions.GetAllAsync(x => x.TweetId == id);
-            return list.Count();
-        }
 
         public async Task<bool> DeleteTweet(int id, string username)
         {
